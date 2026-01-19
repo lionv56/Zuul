@@ -4,12 +4,13 @@ class Game
 {
 	// Private fields
 	private Parser parser;
-	private Room currentRoom;
+	private Player player;
 
 	// Constructor
 	public Game()
 	{
 		parser = new Parser();
+		player = new Player();
 		CreateRooms();
 	}
 
@@ -27,6 +28,8 @@ class Game
 		Room police_station = new Room("in the police station");
 		Room fire_station = new Room("in the fire station");
 		Room military_base = new Room("in the military base");
+		Room military_wapen_room = new Room("in the military wapen room");
+		Room military_basement = new Room("in the military basement");
 
 		// Initialise room exits
 		outside.AddExit("east", theatre);
@@ -56,6 +59,10 @@ class Game
 		fire_station.AddExit("north", outside);
 
 		military_base.AddExit("south", outside);
+		military_base.AddExit("down", military_basement);
+		military_base.AddExit("up", military_wapen_room);
+		military_wapen_room.AddExit("down", military_base);
+		military_basement.AddExit("up", military_base);
 
 		// Create your Items here
 		// ...
@@ -63,7 +70,7 @@ class Game
 		// ...
 
 		// Start game outside
-		currentRoom = outside;
+		player.currentRoom = outside;
 	}
 
 	//  Main play routine. Loops until end of play.
@@ -92,7 +99,7 @@ class Game
 		Console.WriteLine("Zuul incredibly adventure game.");
 		Console.WriteLine("Type 'help' if you need help.");
 		Console.WriteLine();
-		Console.WriteLine(currentRoom.GetLongDescription());
+		Console.WriteLine(player.currentRoom.GetLongDescription());
 	}
 
 	// Given a command, process (that is: execute) the command.
@@ -102,7 +109,7 @@ class Game
 	{
 		bool wantToQuit = false;
 
-		if(command.IsUnknown())
+		if (command.IsUnknown())
 		{
 			Console.WriteLine("I don't know what you mean...");
 			return wantToQuit; // false
@@ -120,7 +127,10 @@ class Game
 				wantToQuit = true;
 				break;
 			case "look":
-				Console.WriteLine(currentRoom.GetLongDescription());
+				Console.WriteLine(player.currentRoom.GetLongDescription());
+				break;
+			case "status":
+				printStatus();
 				break;
 		}
 
@@ -130,9 +140,14 @@ class Game
 	// ######################################
 	// implementations of user commands:
 	// ######################################
-	
+
 	// Print out some help information.
 	// Here we print the mission and a list of the command words.
+	private void printStatus()
+	{
+		Console.WriteLine("Your healt is. "+ player.GetHealth());
+	}
+	
 	private void PrintHelp()
 	{
 		Console.WriteLine("You are lost.");
@@ -146,7 +161,7 @@ class Game
 	// room, otherwise print an error message.
 	private void GoRoom(Command command)
 	{
-		if(!command.HasSecondWord())
+		if (!command.HasSecondWord())
 		{
 			// if there is no second word, we don't know where to go...
 			Console.WriteLine("Go where?");
@@ -156,14 +171,14 @@ class Game
 		string direction = command.SecondWord;
 
 		// Try to go to the next room.
-		Room nextRoom = currentRoom.GetExit(direction);
+		Room nextRoom = player.currentRoom.GetExit(direction);
 		if (nextRoom == null)
 		{
-			Console.WriteLine("There is no door to "+direction+"!");
+			Console.WriteLine("There is no door to " + direction + "!");
 			return;
 		}
 
-		currentRoom = nextRoom;
-		Console.WriteLine(currentRoom.GetLongDescription());
+		player.currentRoom = nextRoom;
+		Console.WriteLine(player.currentRoom.GetLongDescription());
 	}
 }
