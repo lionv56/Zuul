@@ -5,6 +5,7 @@ class Game
 	// Private fields
 	private Parser parser;
 	private Player player;
+	private Room winningRoom;
 
 	// Constructor
 	public Game()
@@ -64,8 +65,13 @@ class Game
 		military_wapen_room.AddExit("down", military_base);
 		military_basement.AddExit("up", military_base);
 
+		// Define winning room
+		winningRoom = military_wapen_room;
+
 		// Create your Items here
-		// ...
+		
+		
+
 		// And add them to the Rooms
 		// ...
 
@@ -85,6 +91,15 @@ class Game
 		{
 			Command command = parser.GetCommand();
 			finished = ProcessCommand(command);
+			if (player.IsAlive() == false)
+			{
+				finished = true;
+			}
+			else if (player.currentRoom == winningRoom)
+			{
+				Console.WriteLine("Congratulations! You have found the winning room!");
+				finished = true;
+			}
 		}
 		Console.WriteLine("Thank you for playing.");
 		Console.WriteLine("Press [Enter] to continue.");
@@ -122,6 +137,7 @@ class Game
 				break;
 			case "go":
 				GoRoom(command);
+				player.Damage();
 				break;
 			case "quit":
 				wantToQuit = true;
@@ -130,7 +146,7 @@ class Game
 				Console.WriteLine(player.currentRoom.GetLongDescription());
 				break;
 			case "status":
-				printStatus();
+				PrintStatus();
 				break;
 		}
 
@@ -143,11 +159,11 @@ class Game
 
 	// Print out some help information.
 	// Here we print the mission and a list of the command words.
-	private void printStatus()
+	private void PrintStatus()
 	{
-		Console.WriteLine("Your healt is. "+ player.GetHealth());
+		Console.WriteLine("Your healt is. " + player.GetHealth());
 	}
-	
+
 	private void PrintHelp()
 	{
 		Console.WriteLine("You are lost.");

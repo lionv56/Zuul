@@ -18,9 +18,9 @@ class Player
             health = 100;
         }
     }
-    public void Damage(int amount)
+    public void Damage()
     {
-        health -= amount;
+        health -= 10;
         if (health < 0)
         {
             health = 0;
@@ -28,7 +28,14 @@ class Player
     }
     public bool IsAlive()
     {
-        return health > 0;
+         if (health > 0)
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
     }
     public int GetHealth()
     {
