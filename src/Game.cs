@@ -70,10 +70,18 @@ class Game
 
 		// Create your Items here
 		
-		
-
+		Item pistol_rifle = new Item(20, "a pistol rifle");
+		Item munition = new Item(4, "bullets");
+		Item medkit = new Item(8, "a medkit");
+		Item knife = new Item(15, "knife");
+		Item first_aid_kit = new Item(10, "a first aid kit");
 		// And add them to the Rooms
-		// ...
+		
+		military_wapen_room.AddItem(pistol_rifle);
+		military_wapen_room.AddItem(munition);
+		police_station.AddItem(medkit);
+		police_station.AddItem(knife);
+		train_station.AddItem(first_aid_kit);
 
 		// Start game outside
 		player.currentRoom = outside;
@@ -144,8 +152,12 @@ class Game
 				break;
 			case "look":
 				Console.WriteLine(player.currentRoom.GetLongDescription());
+				Console.WriteLine(player.currentRoom.getItemDescription());
 				break;
 			case "status":
+				PrintStatus();
+				break;
+			case "take":
 				PrintStatus();
 				break;
 		}

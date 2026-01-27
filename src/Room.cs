@@ -38,6 +38,22 @@ class Room
 		return str;
 	}
 
+	// Return a description of items in the room
+	public string getItemDescription()
+	{
+		if (items.Count == 0)
+		{
+			return "The room is empty.";
+		}
+
+		string itemDescriptions = "Items in the room:\n";
+		foreach (Item item in items)
+		{
+			itemDescriptions += $"- {item.Description} (Weight: {item.Weight})\n";
+		}
+		return itemDescriptions;
+	}
+
 	// Return the room that is reached if we go from this room in direction
 	// "direction". If there is no room in that direction, return null.
 	public Room GetExit(string direction)
@@ -58,4 +74,12 @@ class Room
 
 		return str;
 	}
+
+	// Add an item to the room
+	public void AddItem(Item item)
+	{
+		// Implementation for adding an item to the room
+		items.Add(item);
+	}
+	private List<Item> items = new List<Item>();
 }
