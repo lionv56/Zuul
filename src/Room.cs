@@ -82,4 +82,19 @@ class Room
 		items.Add(item);
 	}
 	private List<Item> items = new List<Item>();
+
+	public string take(string itemDescription, Player player)
+	{
+		Item itemToTake = items.Find(item => item.Description.ToLower() == itemDescription.ToLower());
+		if (itemToTake != null)
+		{
+			items.Remove(itemToTake);
+			// Here you would typically add the item to the player's inventory
+			return $"You have taken the {itemToTake.Description}.";
+		}
+		else
+		{
+			return $"There is no {itemDescription} here.";
+		}
+	}
 }

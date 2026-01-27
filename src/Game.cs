@@ -158,7 +158,7 @@ class Game
 				PrintStatus();
 				break;
 			case "take":
-				PrintStatus();
+				Console.WriteLine(player.currentRoom.take(command.SecondWord, player));
 				break;
 		}
 
