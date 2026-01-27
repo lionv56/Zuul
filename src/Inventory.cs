@@ -66,4 +66,12 @@ class Inventory
         itemName = itemName.Trim().ToLower();
         return items.ContainsKey(itemName);
     }
+    private void AddItem(string itemName, Item item)
+    {
+        // TODO implementeer: 
+        // Voeg het Item toe aan de Inventory
+        if (itemName == null || item == null) return;
+        itemName = itemName.Trim().ToLower();
+        items[itemName] = item;
+    }
 } 

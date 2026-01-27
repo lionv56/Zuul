@@ -4,9 +4,16 @@ class Player
     // fields
     public Room currentRoom { get; set; }
     private int health;
+    private Inventory inventory;
+
+    public bool Putinventory(string itemName, Item item)
+    {
+        return inventory.Put(itemName, item);
+    }
     // constructor 
     public Player()
     {
+        inventory = new Inventory(50);
         currentRoom = null;
         health = 100;
     }
