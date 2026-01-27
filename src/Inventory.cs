@@ -62,11 +62,8 @@ class Inventory
     {
         // TODO implementeer: 
         // Check of het Item al in de Inventory zit
-        itemName
-        if (items.ContainsKey(itemName)) return true;
-        else
-        {
-            return false;
-        }
+        if (itemName == null) return false;
+        itemName = itemName.Trim().ToLower();
+        return items.ContainsKey(itemName);
     }
 } 
