@@ -160,6 +160,12 @@ class Game
 			case "take":
 				Console.WriteLine(player.currentRoom.take(command.SecondWord, player));
 				break;
+			case "drop":
+				Console.WriteLine(player.currentRoom.drop(command.SecondWord, player));
+				break;
+			case "inventory":
+				Console.WriteLine(player.GetInventoryDescription());
+				break;
 		}
 
 		return wantToQuit;
